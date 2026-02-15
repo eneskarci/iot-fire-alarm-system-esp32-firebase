@@ -7,7 +7,7 @@ Bu proje Mühendislik Tasarımı 1 dersi kapsamında tarafımdan geliştirilmiş
 Lütfen kendi emeğinizle çalışın. Kullanmak isterseniz önce benimle iletişime geçiniz.
 
 
-🇹🇷 TÜRKÇE
+TÜRKÇE
 ============================================================
 
 ## Proje Özeti
@@ -46,7 +46,7 @@ Geliştirme ortamı: Arduino IDE
 - weblocal.html → Yerel web arayüzü
 
 
-🇬🇧 ENGLISH
+ENGLISH
 ====
 
 ## Project Overview
