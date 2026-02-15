@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Fire Department Alerting System</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+        <style>
+            body {
+                background-color: #14377e6a;
+            }
+    
+            .container-box {
+                text-align: center;
+            }
+            .container-box2 {
+                margin: 4cm;
+                text-align: center;
+            }
+    
+            table {
+                border-collapse: collapse;
+                width: 100%;
+                border: 25px solid #8cc883; 
+            }
+    
+            th,
+            td {
+                border: 2px solid #0000; 
+                padding: 8px;
+                text-align: left;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <div class="container-box2">
+            <table class="table table-dark mx-auto">
+                <thead>
+                    <tr>
+                        <th scope="col" colspan="3" class="text-center"><font size=100 face="Arial" color=#19d60f>YANGIN ALARM SİSTEMİ SENSÖR VERİLERİ</font></th>
+                    </tr>
+                </thead>
+            </table>
+            <div class="container-box">
+                <table class="table table-dark mx-auto" id="sensorTable">
+                    <thead>
+                        <tr>
+                            <th colspan="3" class="text-center">SENSÖR VERİLERİ</th>
+                        </tr>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Veriler</th>
+                            <th scope="col">Alınan Değerler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Nem</td>
+                            <td><p class="value" id="Nem"> %18 </p></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Sıcaklık</td>
+                            <td><p class="value" id="Sicaklik"> 50&#8451; </p></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>Ateş</td>
+                            <td><p class="value" id="Ates">%80</p></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">4</th>
+                            <td>Hareket</td>
+                            <td><p class="value" id="Hareket">0</p></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="container-box" id="gifContainer" style="display:none;">
+                    <img src="aa.gif" alt="Motion Detected GIF" id="motionGif" width="200" height="200">
+                </div>
+            </div>
+        </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+    <script type="module">
+      
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.20.0/firebase-app.js";
+   
+      const firebaseConfig = {
+        apiKey: "AIzaSyCme0fSw82bfwQprU_L5g5meNXKwJyNR38",
+        authDomain: "alerting-system-for-muhtas.firebaseapp.com",
+        databaseURL: "https://alerting-system-for-muhtas-default-rtdb.europe-west1.firebasedatabase.app",
+        projectId: "alerting-system-for-muhtas",
+        storageBucket: "alerting-system-for-muhtas.appspot.com",
+        messagingSenderId: "492806598990",
+        appId: "1:492806598990:web:5932b51d57e2c44ac3ae1f",
+        measurementId: "G-YRLFK7NHM7"
+    };
+     
+      firebase.initializeApp(firebaseConfig);
+      var database = firebase.database();
+      var dataRef1 = database.ref('Sensor_Verileri/DHT11/Nem');
+      var dataRef2 = database.ref('Sensor_Verileri/DHT11/Sicaklik');
+      var dataRef3 = database.ref('Sensor_Verileri/Fire/Ates');
+      var dataRef4 = database.ref('Sensor_Verileri/PIR/Hareket');
+
+      dataRef1.on('value', function(getdata1){
+        var Nem = getdata1.val();
+            document.getElementById('Nem').innerHTML = Nem + "%";
+      })
+
+        dataRef2.on('value', function(getdata2){
+            var Sicaklik = getdata2.val();
+            document.getElementById('Sicaklik').innerHTML = Sicaklik + "&#8451;";
+      })
+
+        dataRef3.on('value', function(getdata3){
+            var Ates = getdata3.val();
+            document.getElementById('Ates').innerHTML = "%" + Ates ;
+      })
+
+        dataRef4.on('value', function(getdata4){
+            var Hareket = getdata4.val();
+            document.getElementById('Hareket').innerHTML = Hareket ; 
+
+            var gifContainer = document.getElementById('gifContainer');
+            var motionGif = document.getElementById('motionGif');
+
+            if (Hareket === true) {
+                // If motion is detected (true), show the GIF
+                gifContainer.style.display = 'block';
+            } else {
+                // If no motion (false), hide the GIF
+                gifContainer.style.display = 'none';
+            }
+      })
+
+    </script>
+</body>
+</html>
+
+
